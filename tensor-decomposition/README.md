@@ -21,4 +21,5 @@ Using Singular Value Decomposition (SVD), we can write a matrix M∈Rn×m as the
 
 <img src="http://latex.codecogs.com/gif.latex?M = \sum_{i=1}^{r} { \lambda_i \overrightarrow{u_i} \overrightarrow{v_i}^{T} }"/>
 
+
 $$  M = \sum_{i=1}^{r} { \lambda_i \overrightarrow{u_i} \overrightarrow{v_i}^{T} } $$
