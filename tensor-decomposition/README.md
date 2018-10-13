@@ -91,7 +91,7 @@ Since our current data has multiple explanatory decompositions, we need more dat
 在第二节我们讲到了，因为目前的数据有多种分解方式，所以我们需要更多的数据去挖掘到底怎样的分解才是正确的。
 假设智力水平会随着一天内的时间发生改变，例如，我们在晚上的时候可以更好的完成量化方面的任务（只是一个假设）。
 现在让学生进行两次考试，一次是在白天，一次在晚上。得到的结果将会用两个矩阵表示，<img src="http://latex.codecogs.com/gif.latex?\textbf{M}_{day}">和<img src="http://latex.codecogs.com/gif.latex?\textbf{M}_{night}">。
-但是我们可以认为这是一个三维矩阵——张量<img src="http://latex.codecogs.com/gif.latex?\textbf{T}%20\in%20\textbf{R}^{#students%20\times%20#tests%20\times2">。
+但是我们可以认为这是一个三维矩阵——张量<img src="http://latex.codecogs.com/gif.latex?\textbf{T}%20\in%20\textbf{R}^{\sharp%20students%20\times%20\sharp%20tests%20\times2">。
 这里第三个维度表示白天和黑夜。换句话说，矩阵<img src="http://latex.codecogs.com/gif.latex?\textbf{M}_{day}">和<img src="http://latex.codecogs.com/gif.latex?\textbf{M}_{night}">是张量<img src="http://latex.codecogs.com/gif.latex?\textbf{T}">在第三个维度方向上的切片。
 
 
