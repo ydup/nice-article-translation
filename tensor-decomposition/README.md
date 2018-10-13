@@ -22,7 +22,7 @@ Using Singular Value Decomposition (SVD), we can write a matrix M∈Rn×m as the
 
 When the rank r is small, this gives a concise representation for the matrix M (using (m+n)r parameters instead of mn). Such decompositions are widely applied in machine learning.
 
-如果矩阵的秩r比较小，那么就可以给出一个对矩阵M的简介的表达形式（使用了(m+n)r个参数，而不是mn个）。这样的分解在机器学习中广泛应用。
+如果矩阵的秩r比较小，那么就可以给出一个对矩阵<img src="http://latex.codecogs.com/gif.latex?\textbf{M}">的简洁的表达形式（使用了(m+n)r个参数，而不是mn个）。这样的分解在机器学习中广泛应用。
 
 Tensor decomposition is a generalization of low rank matrix decomposition. Although most tensor problems are NP-hard in the worst case, several natural subcases of tensor decomposition can be solved in polynomial time. Later we will see that these subcases are still very powerful in learning latent variable models.
 
@@ -38,26 +38,26 @@ Charles Spearman通过进行各种不同的考试来支持他的理论。考试�
 
 The simplified version of Spearman’s hypothesis is that each student has different amounts of quantitative and verbal intelligence, say xquant and xverb respectively. Each test measures a different mix of intelligences, so say it gives a weighting yquant to quantitative and yverb to verbal. Intuitively, a student with higher strength on verbal intelligence should perform better on a test that has a high weight on verbal intelligence. Let’s describe this relationship as a simple bilinear function:
 
-简化一下Charles Spearman的假说，每一个学生具有不同的量化水平和语言水平，各自用<img src="http://latex.codecogs.com/gif.latex?x_quant" />和<img src="http://latex.codecogs.com/gif.latex?x_verb}" /> 符号代表。
-每一个科目的测试衡量了不同程度智力水平的组合，（例如数学科目当中衡量量化水平的程度要更高一些），所以给量化水平和语言水平不同的权重，分别用<img src="http://latex.codecogs.com/gif.latex?y_quant" />和<img src="http://latex.codecogs.com/gif.latex?y_verb}" /> 代表。
+简化一下Charles Spearman的假说，每一个学生具有不同的量化水平和语言水平，各自用<img src="http://latex.codecogs.com/gif.latex?x_{quant}" />和<img src="http://latex.codecogs.com/gif.latex?x_{verb}" /> 符号代表。
+每一个科目的测试衡量了不同程度智力水平的组合，（例如数学科目当中衡量量化水平的程度要更高一些），所以给量化水平和语言水平不同的权重，分别用<img src="http://latex.codecogs.com/gif.latex?y_{quant}" />和<img src="http://latex.codecogs.com/gif.latex?y_{verb}" /> 代表。
 直观得说，一个学生如果拥有较高的语言水平（相对于量化水平），那么他/她应该可以在语言水平权重比较高的科目中获得更优异的成绩。（例如语言水平更高的同学的语文成绩应该要比数学成绩更高一些）。
 那么我们用一个简单的二元线性函数来描述这个现象：
 
 <div align=center>
-<img src="http://latex.codecogs.com/gif.latex?score=x_quant%20\times%20y_quant+x_verb%20\times%20y_verb" />
+<img src="http://latex.codecogs.com/gif.latex?score=x_{quant}%20\times%20y_{quant}+x_{verb}%20\times%20y_{verb}" />
 </div>
 
 Denoting by x verb,x quant the vectors describing the strengths of the students, and letting y verb,y quant be the vectors that describe the weighting of intelligences in the different tests, we can express matrix M as the sum of two rank 1 matrices (in other words, M has rank at most 2):
 
-用<img src="http://latex.codecogs.com/gif.latex?\overrightarrow{x}_quant" />和<img src="http://latex.codecogs.com/gif.latex?\overrightarrow{x}_verb" /> 向量表示学生样本的两个智力水平，用<img src="http://latex.codecogs.com/gif.latex?\overrightarrow{y}_quant" />和<img src="http://latex.codecogs.com/gif.latex?\overrightarrow{y}_verb" />表示在不同考试当中两个智力类型的权重，我们可以用两个秩为1的矩阵和表示M，（而M的秩最大为2）：
+用<img src="http://latex.codecogs.com/gif.latex?\overrightarrow{x}_{quant}" />和<img src="http://latex.codecogs.com/gif.latex?\overrightarrow{x}_{verb}" /> 向量表示学生样本的两个智力水平，用<img src="http://latex.codecogs.com/gif.latex?\overrightarrow{y}_{quant}" />和<img src="http://latex.codecogs.com/gif.latex?\overrightarrow{y}_{verb}" />表示在不同考试当中两个智力类型的权重，我们可以用两个秩为1的矩阵和表示M，（而M的秩最大为2）：
 
 <div align=center>
-<img src="http://latex.codecogs.com/gif.latex?\textbf{M}=\overrightarrow{x}_quant%20\overrightarrow{y}^T_quant+\overrightarrow{x}_verb%20overrightarrow{y}^T_verb" />
+<img src="http://latex.codecogs.com/gif.latex?\textbf{M}=\overrightarrow{x}_{quant}%20\overrightarrow{y}^T_{quant}+\overrightarrow{x}_{verb}%20overrightarrow{y}^T_{verb}" />
 </div>
 
 Thus verifying that M has rank 2 (or that it is very close to a rank 2 matrix) should let us conclude that there are indeed two kinds of intelligence.
 
-因此，确认的矩阵M的秩为2（或者说是很接近秩为2的矩阵，这里指的是矩阵在科目方向上的秩很接近2）可以让我们推断出确实只有这两种智力水平。
+因此，确认的矩阵<img src="http://latex.codecogs.com/gif.latex?\textbf{M}">的秩为2（或者说是很接近秩为2的矩阵，这里指的是矩阵在科目方向上的秩很接近2）可以让我们推断出确实只有这两种智力水平。
 
 
 Note that this decomposition is not the Singular Value Decomposition (SVD). SVD requires strong orthogonality constraints (which translates to “different intelligences are completely uncorrelated”) that are not plausible in this setting.
