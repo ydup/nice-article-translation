@@ -199,9 +199,65 @@ Now if we let x l be a vector whose i-th entry is the probability of the first w
 This is exactly the low rank form we are looking for! Tensor decomposition allows us to uniquely identify these components, and further infer the other probabilities we are interested in. For more details see the paper by Anandkumar et al. 2012 (this paper uses the tensor notations, but the original idea appeared in the paper by Mossel and Roch 2006).
 
 这就是我们苦苦寻找的低秩形式！
-张量分解允许我们可以辨别这些成分，并且进一步推理其他我们感兴趣的概率。
+张量分解得以让我们可以辨别这些成分，并且进一步推理其他我们感兴趣的概率。
 更多的细节可以查看[Anandkumar et al. 2012](http://arxiv.org/abs/1210.7559)
 （这篇论文用到了张量的符号，但是原创的思想早在[Mossel and Roch 2006](https://projecteuclid.org/euclid.aoap/1151592244)就出现了）
+
+## 5. 张量分解的实现（Implementing Tensor Decomposition）
+
+Using method of moments, we can discover nice tensor structures from many problems. The uniqueness of tensor decomposition makes these tensors very useful in learning the parameters of the models. But how do we compute the tensor decompositions?
+
+根据矩量法，我们可以在很多问题中发现很棒👍的张量形式。
+张量分解的唯一性使得很多张量在学习模型参数方面很有价值。
+但是我们怎么样计算张量分解呢？
+
+In the worst case we have bad news: most tensor problems are NP-hard. However, in most natural cases, as long as the tensor does not have too many components, and the components are not adversarially chosen, tensor decomposition can be computed in polynomial time! Here we describe the algorithm by Dr. Robert Jenrich (it first appeared in a 1970 working paper by Harshman, the version we present here is a more general version by Leurgans, Ross and Abel 1993).
+
+不幸的是，在最坏的情况下，大多数张量问题都是NP难问题。
+但是，在多数自然的情况下，只要张量没有太多的成分，并且成分不是敌对地选择，那么张量分解往往可以在多项式类型的时间复杂度内计算完毕。
+这里我们介绍Dr. Robert Jenrich的算法（首次出现在1970年[Harshman的论文](http://hbanaszak.mjr.uw.edu.pl/TempTxt/Harshman_1970_Foundations%20of%20PARAFAC%20Procedure%20MOdels%20and%20Conditions%20for%20an%20Expalanatory%20Multimodal%20Factor%20Analysis.pdf)当中，这里我们介绍的是更普适的[Leurgans, Ross and Abel 1993](http://dl.acm.org/citation.cfm?id=173234)版本）
+
+Jenrich的算法：
+
+输入：张量<img src="http://latex.codecogs.com/gif.latex?\textbf{T}=\sum_{i=1}^{r}{\lambda_i%20\overrightarrow{x}_{i}\otimes%20\overrightarrow{y}_{i}\otimes%20\overrightarrow{z}_{i}">
+
+1. 挑选两个随机向量<img src="http://latex.codecogs.com/gif.latex?\overrightarrow{u},\overrightarrow{v}">
+2. 计算<img src="http://latex.codecogs.com/gif.latex?\textbf{T}_{\overrightarrow{u}}=\sum_{i=1}^{n}{u_i%20\textbf{T[:,:,i]}=\sum_{i=1}^{r}{\lambda_i(\overrightarrow{u}^T%20\overrightarrow{z}_i)\overrightarrow{x}_i\overrightarrow{y}_i^T}">
+3. 计算<img src="http://latex.codecogs.com/gif.latex?\textbf{T}_{\overrightarrow{v}}=\sum_{i=1}^{n}{v_i%20\textbf{T[:,:,i]}=\sum_{i=1}^{r}{\lambda_i(\overrightarrow{v}^T%20\overrightarrow{z}_i)\overrightarrow{x}_i\overrightarrow{y}_i^T}">
+4. <img src="http://latex.codecogs.com/gif.latex?\overrightarrow{u}_i,\overrightarrow{v}_i">分别是<img src="http://latex.codecogs.com/gif.latex?\textbf{T}_{\overrightarrow{u}}(\textbf{T}_{\overrightarrow{v}})^{+}">和<img src="http://latex.codecogs.com/gif.latex?\textbf{T}_{\overrightarrow{v}}(\textbf{T}_{\overrightarrow{u}})^{+}">的特征向量。
+
+In the algorithm, “+” denotes pseudo-inverse of a matrix (think of it as inverse if this is not familiar).
+
+在算法中，<img src="http://latex.codecogs.com/gif.latex?%20^{+}">指的是矩阵的假逆（如果你不熟悉的话，可以认为就是求逆矩阵的符号）
+
+The algorithm looks at weighted slices of the tensor: a weighted slice is a matrix that is the projection of the tensor along the z direction (similarly if we take a slice of a matrix M, it will be a vector that is equal to Mu⃗ ). Because of the low rank structure, all the slices must share matrix decompositions with the same components.
+
+算法可以看做是给张量的切片一定的权重：一个权重化的切片实际上就是张量沿着_z_方向的投影（类似地，如果我们取出一个矩阵<img src="http://latex.codecogs.com/gif.latex?\textbf{M}">的切片，可以得到一个等效于<img src="http://latex.codecogs.com/gif.latex?\textbf{M}\overrightarrow{u}">的向量）。由于其低秩结构，所有的切片都必须共享具有同样成分的矩阵分解。
+
+The main observation of the algorithm is that although a single matrix can have infinitely many low rank decompositions, two matrices can only have a unique decomposition if we require them to have the same components. In fact, it is highly unlikely for two arbitrary matrices to share decompositions with the same components. In the tensor case, because of the low rank structure we have
+
+该算法的主要思路是尽管单一矩阵可以有无限种低秩分解的情况，但是如果要求拥有同样的成分，那么两个矩阵只能有唯一的分解。
+事实上，两个任意矩阵的分解基本不可能共用同样的成分。
+在张量的情况下，由于低秩的结构，我们有：
+
+<div align=center>
+<img src="http://latex.codecogs.com/gif.latex?\textbf{T}_{\overrightarrow{u}}=\textbf{X}\textbf{D}_{\overrightarrow{u}}\textbf{Y}^T;\textbf{T}_{\overrightarrow{v}}=\textbf{X}\textbf{D}_{\overrightarrow{v}}\textbf{Y}^T">
+</div>
+
+where Du⃗ ,Dv⃗  are diagonal matrices. This is called a simultaneous diagonalization for Tu⃗  and Tv⃗ . With this structure it is easy to show that x⃗ i’s are eigenvectors of Tu⃗ (Tv⃗ )+=XDu⃗ D−1v⃗ X+. So we can actually compute tensor decompositions using spectral decompositions for matrices.
+
+上式中，<img src="http://latex.codecogs.com/gif.latex?\textbf{D}_{\overrightarrow{u}},\textbf{D}_{\overrightarrow{v}}">均为对角矩阵。
+这称作对于<img src="http://latex.codecogs.com/gif.latex?\textbf{D}_{\overrightarrow{u}}">和<img src="http://latex.codecogs.com/gif.latex?\textbf{D}_{\overrightarrow{v}}">的同步对角化。
+在这样的结构中，很容易看出<img src="http://latex.codecogs.com/gif.latex?\overrightarrow{x}_i">就是<img src="http://latex.codecogs.com/gif.latex?\textbf{T}_{\overrightarrow{u}}(\textbf{T}_{\overrightarrow{v}})^{+}=\textbf{X}\textbf{D}_{\overrightarrow{u}}\textbf{D}_{\overrightarrow{v}}^{-1}%20\textbf{Y}^{+}">的特征向量。
+所以实际上我们可以通过矩阵的谱分解实现张量分解。
+
+Many of the earlier works (including Mossel and Roch 2006) that apply tensor decompositions to learning problems have actually independently rediscovered this algorithm, and the word “tensor” never appeared in the papers. In fact, tensor decomposition techniques are traditionally called “spectral learning” since they are seen as derived from SVD. But now we have other methods to do tensor decompositions that have better theoretical guarantees and practical performances. See the survey by Kolda and Bader 2009 for more discussions.
+
+很多早先的应用张量分解到学习问题中的工作（包括[Mossel and Roch 2006](https://projecteuclid.org/euclid.aoap/1151592244)）已经发现了这个算法，而名词"tensor"却从未出现在该篇论文中。
+事实上，张量分解技术传统上被称为谱学习，因为他们是被从SVD方法中提取出来的。
+但是现在我们有了其他方法可以实现张量分解，并且这些方法有着更好的理论依据和实践中的表现。关于这方面，可以从[Kolda and Bader 2009](http://dl.acm.org/citation.cfm?id=1655230)的调研中看到更多的讨论。
+
+
 
 
 
