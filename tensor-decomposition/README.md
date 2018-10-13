@@ -104,7 +104,7 @@ Let zquant and zverb be the relative strength of the two kinds of intelligence a
 
 Keep in mind that this is the formula for one entry in the tensor: the score of one student, in one test and at a specific time. Who the student is specifies xquant and xverb; what the test is specifies weights yquant and yverb; when the test takes place specifies zquant and zverb.
 
-牢记这个公式是用来计算张量中的一个元素的：在某一个时间下的，某一个学生的某一项考试成绩。
+牢记这个公式是用来计算张量中的某一个元素的，即在某一个时间下的，某一个学生的某一项考试成绩。
 每个学生都有对应的智力水平<img src="http://latex.codecogs.com/gif.latex?\x_{quant}" />和<img src="http://latex.codecogs.com/gif.latex?x_{verb}" /> ，每个考试科目都有对应的智力类型权重<img src="http://latex.codecogs.com/gif.latex?\y_{quant}" />和<img src="http://latex.codecogs.com/gif.latex?y_{verb}" />，考试科目的时间也有对应的智力类型权重<img src="http://latex.codecogs.com/gif.latex?\z_{quant}" />和<img src="http://latex.codecogs.com/gif.latex?z_{verb}" />。
 
 Similar to matrices, we can view this as a rank 2 decomposition of the tensor T. In particular, if we use x⃗ quant,x⃗ verb to denote the strengths of students, y⃗ quant,y⃗ verb to denote the weights of the tests and z⃗ quant,z⃗ verb to denote the variations of strengths in time, then we can write the decomposition as
@@ -122,7 +122,7 @@ Now we can check that the second matrix decomposition we had is no longer valid:
 
 Corollary The decomposition of tensor T is unique (up to scaling and permutation) if none of the vector pairs (x⃗ quant,x⃗ verb), (y⃗ quant,y⃗ verb), (z⃗ quant,z⃗ verb) are co-linear.
 
->  推论：当没有一个向量对<img src="http://latex.codecogs.com/gif.latex?(\overrightarrow{x}_{quant},\overrightarrow{x}_{verb})"/>，<img src="http://latex.codecogs.com/gif.latex?(\overrightarrow{y}_{quant},\overrightarrow{y}_{verb})"/>以及<img src="http://latex.codecogs.com/gif.latex?(\overrightarrow{z}_{quant},\overrightarrow{z}_{verb})"/>是线性相关的，那么张量<img src="http://latex.codecogs.com/gif.latex?\textbf{T}">的分解就是唯一的。
+>  推论：如果向量对<img src="http://latex.codecogs.com/gif.latex?(\overrightarrow{x}_{quant},\overrightarrow{x}_{verb})"/>，<img src="http://latex.codecogs.com/gif.latex?(\overrightarrow{y}_{quant},\overrightarrow{y}_{verb})"/>以及<img src="http://latex.codecogs.com/gif.latex?(\overrightarrow{z}_{quant},\overrightarrow{z}_{verb})"/>都是非线性相关的，那么张量<img src="http://latex.codecogs.com/gif.latex?\textbf{T}">的分解就是唯一的。
 
 Note that of course the decomposition is not truly unique for two reasons. First, the two tensor factors are symmetric, and we need to decide which factor correspond to quantitative intelligence. Second, we can scale the three components x⃗ quant ,y⃗ quant, z⃗ quant simultaneously, as long as the product of the three scales is 1. Intuitively this is like using different units to measure the three components. Kruskal’s result showed that these are the only degrees of freedom in the decomposition, and there cannot be a truly distinct decomposition as in the matrix case.
 
@@ -135,11 +135,73 @@ Kruskal的结果表明，只有分解的阶数是自由量，并且在矩阵分�
 
 In the above example we get a low rank tensor T by gathering more data. In many traditional applications the extra data may be unavailable or hard to get. Luckily, many exciting recent developments show that we can uncover these special tensor structures even if the original data is not in a tensor form!
 
+在上面的例子当中我们通过获得更多的数据来构造一个低秩张量<img src="http://latex.codecogs.com/gif.latex?\textbf{T}">。
+在很多情况下，额外的数据往往是不能或者很难获取的。幸运的是，目前很多令人激动的方法表明我们可以挖掘这些特殊的张量结构，尽管原始数据并不是一个张量的形式。
 
+The main idea is to use method of moments (see a nice post by Moritz): estimate lower order correlations of the variables, and hope these lower order correlations have a simple tensor form.
 
+其主要思想是使用矩量法（可以参考Moritz的[博客](http://blog.mrtz.org/2014/04/22/pearsons-polynomial.html)），计算变量的低阶相关性，并且希望其相关性可以有一个简单的张量形式。
 
+Consider Hidden Markov Model as an example. Hidden Markov Models are widely used in analyzing sequential data like speech or text. Here for concreteness we consider a (simplified) model of natural language texts(which is a basic version of the word embeddings).
 
+这里以隐藏马尔科夫（HMM）模型为例。HMM广泛用于分析序列数据，比如语音或者文本。
+这里我们具体考虑一个简化的自然语言模型（也是最基本的词向量模型）
 
+In Hidden Markov Model, we observe a sequence of words (a sentence) that is generated by a walk of a hidden Markov Chain: each word has a hidden topic h (a discrete random variable that specifies whether the current word is talking about “sports” or “politics”); the topic for the next word only depends on the topic of the current word. Each topic specifies a distribution over words. Instead of the topic itself, we observe a random word x drawn from this topic distribution (for example, if the topic is “sports”, we will more likely see words like “score”). The dependencies are usually illustrated by the following diagram:
+
+在HMM中，我们观测一个由隐藏马尔科夫链所生成的词汇序列（也就是一个句子）：每个单词都有一个隐藏的话题 <img src="http://latex.codecogs.com/gif.latex?h">（一个分离的随机的变量，指定了当前词汇讨论的是“运动”或者“政治”），
+下一个词的话题__只__取决于当前词的话题，每个话题都对应了一些词汇的分布。
+除了话题本身，我们观测到的随机的词汇 <img src="http://latex.codecogs.com/gif.latex?x">是从话题的分布当中提取出的，
+（例如，如果话题是关于运动，那么我们就很可能会看到类似于”得分“这样的单词）。这种依赖性通常用下图阐释：
+
+More concretely, to generate a sentence in Hidden Markov Model, we start with some initial topic h1. This topic will evolve as a Markov Chain to generate the topics for future words h2,h3,…,ht. We observe words x1,…,xt from these topics. In particular, word x1 is drawn according to topic h1, word x2 is drawn according to topic h2 and so on.
+
+更具体的，为了以HMM的形式生成一个句子，我们会以一个初始话题<img src="http://latex.codecogs.com/gif.latex?h_1">开始。
+这个话题将会以马尔科夫链的形式进化，从而为未来的单词生成一系列话题<img src="http://latex.codecogs.com/gif.latex?h_2,h_3,...,h_t">。
+我们将会从这些话题当中观测到一系列词汇<img src="http://latex.codecogs.com/gif.latex?x_1,x_2,...,x_t">。具体的，单词<img src="http://latex.codecogs.com/gif.latex?x_1">是由话题<img src="http://latex.codecogs.com/gif.latex?h_1">生成的，<img src="http://latex.codecogs.com/gif.latex?x_2">是由话题<img src="http://latex.codecogs.com/gif.latex?h_2">生成的，以此类推。
+
+Given many sentences that are generated exactly according to this model, how can we construct a tensor? A natural idea is to compute correlations: for every triple of words (i,j,k), we count the number of times that these are the first three words of a sentence. Enumerating over i,j,k gives us a three dimensional array (a tensor) T. We can further normalize it by the total number of sentences. After normalization the (i,j,k)-th entry of the tensor will be an estimation of the probability that the first three words are (i,j,k). For simplicity assume we have enough samples and the estimation is accurate:
+
+给定许多特别是由这样的模型生成的句子，我们怎样才能构造一个张量呢？
+一个很自然的想法就是计算相关性：对于每一个单词三元组<img src="http://latex.codecogs.com/gif.latex?(i,j,k)">，
+我们都会累计句子的前三个单词的次数。
+枚举<img src="http://latex.codecogs.com/gif.latex?i,j,k">，将会生成一个三维的张量<img src="http://latex.codecogs.com/gif.latex?\textbf{T}">。
+我们可以进一步用句子的总数标准化该张量。
+经过标准化后张量中第<img src="http://latex.codecogs.com/gif.latex?(i,j,k)">个元素就可以衡量前三个词是<img src="http://latex.codecogs.com/gif.latex?(i,j,k)">的概率。
+为了问题简化，假设我们有足够多的样本并且估计是准确的：
+
+<div align=center>
+<img src="http://latex.codecogs.com/gif.latex?\textbf{T}=Pr[x_1=i,x_2=j,x_3=k]">
+</div>
+
+Why does this tensor have the nice low rank property? The key observation is that if we “fix” (condition on) the topic of the second word h2, it cuts the graph into three parts: one part containing h1,x1, one part containing x2 and one part containing h3,x3. These three parts are independent conditioned on h2. In particular, the first three words x1,x2,x3 are independent conditioned on the topic of the second word h2. Using this observation we can compute each entry of the tensor as
+
+那么为什么这个张量具有很好的低秩性呢？
+关键的观察在于如果我们固定第二个单词的话题<img src="http://latex.codecogs.com/gif.latex?h_2">，那么就会将拓扑分解为三个部分：
+一个部分包括了<img src="http://latex.codecogs.com/gif.latex?h_1,x_1">，一个包括了<img src="http://latex.codecogs.com/gif.latex?x_2">以及第三个包括了<img src="http://latex.codecogs.com/gif.latex?h_3,x_3">。
+这三个部分在固定<img src="http://latex.codecogs.com/gif.latex?h_2">的情况下都是互相独立的。
+特别的，三个词<img src="http://latex.codecogs.com/gif.latex?x_1,x_2,x_3">在固定<img src="http://latex.codecogs.com/gif.latex?h_2">的情况下是独立的。根据这样的观察，我们可以计算张量中的每一个元素：
+
+<div align=center>
+<img src="http://latex.codecogs.com/gif.latex?\textbf{T}_{i,j,k}=\sum_{l=1}^{n}{Pr[h2=l]\times%20Pr[x_1=i|h_2=l]\times%20Pr[x_2=j|h_2=l]\times%20Pr[x_3=k|h_2=l]}">
+</div>
+
+Now if we let x l be a vector whose i-th entry is the probability of the first word is i, given the topic of the second word is l; let y⃗ l and z⃗ l be similar for the second and third word. We can then write the entire tensor as
+
+现在，如果我们令<img src="http://latex.codecogs.com/gif.latex?\overrightarrow{x}_{l}" />是一个向量，其第<img src="http://latex.codecogs.com/gif.latex?i" />个元素为：在给定第二个单词的话题是<img src="http://latex.codecogs.com/gif.latex?l" />的情况下第一个词是<img src="http://latex.codecogs.com/gif.latex?i" />的概率。
+同样的<img src="http://latex.codecogs.com/gif.latex?\overrightarrow{y}_{l}" />和<img src="http://latex.codecogs.com/gif.latex?\overrightarrow{z}_{l}" />分别对应第二个和第三个词。
+我们可以把张量<img src="http://latex.codecogs.com/gif.latex?\textbf{T}">写作：
+
+<div align=center>
+<img src="http://latex.codecogs.com/gif.latex?\textbf{T}=\sum_{r=1}^{n}{Pr[h_2=l]\overrightarrow{x}_{l}\otimes%20\overrightarrow{y}_{l}\otimes%20\overrightarrow{z}_{l}">
+</div>
+
+This is exactly the low rank form we are looking for! Tensor decomposition allows us to uniquely identify these components, and further infer the other probabilities we are interested in. For more details see the paper by Anandkumar et al. 2012 (this paper uses the tensor notations, but the original idea appeared in the paper by Mossel and Roch 2006).
+
+这就是我们苦苦寻找的低秩形式！
+张量分解允许我们可以辨别这些成分，并且进一步推理其他我们感兴趣的概率。
+更多的细节可以查看[Anandkumar et al. 2012](http://arxiv.org/abs/1210.7559)
+（这篇论文用到了张量的符号，但是原创的思想早在[Mossel and Roch 2006](https://projecteuclid.org/euclid.aoap/1151592244)就出现了）
 
 
 
