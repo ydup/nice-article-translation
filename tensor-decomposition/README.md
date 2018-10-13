@@ -1,4 +1,4 @@
-# 机器学习当中的张量方法(Tensor Methods in Machine Learning)
+# 机器学习中的张量方法(Tensor Methods in Machine Learning)
 
 This original blog is from https://www.offconvex.org/2015/12/17/tensor-decompositions/.
 
@@ -15,10 +15,10 @@ In this post I will briefly describe why tensors are useful in these settings.
 
 Using Singular Value Decomposition (SVD), we can write a matrix M∈Rn×m as the sum of many rank one matrices:
 
-通过奇异值分解方法（SVD），我们可以把一个矩阵 <img src="http://latex.codecogs.com/gif.latex?M\inR_{n\timesm}" />  写作很多个秩为1的矩阵和的形式：
-
+通过奇异值分解方法（SVD），我们可以把一个矩阵 <img src="http://latex.codecogs.com/gif.latex?M%20\in%20R_{n%20\times%20m}" />  写作很多个秩为1的矩阵和的形式：
+<div align=center>
 <img src="http://latex.codecogs.com/gif.latex?M=\sum_{i=1}^{r}{\lambda_i\overrightarrow{u_i}\overrightarrow{v_i}^{T}}" />
-
+</div>
 When the rank r is small, this gives a concise representation for the matrix M (using (m+n)r parameters instead of mn). Such decompositions are widely applied in machine learning.
 
 如果矩阵的秩r比较小，那么就可以给出一个对矩阵M的简介的表达形式（使用了(m+n)r个参数，而不是mn个）。这样的分解在机器学习中广泛应用。
@@ -31,6 +31,11 @@ Tensor decomposition is a generalization of low rank matrix decomposition. Altho
 
 Before talking about tensors, let us first see an example of how matrix factorization can be used to learn latent variable models. In 1904, psychologist Charles Spearman tried to understand whether human intelligence is a composite of different types of measureable intelligence. Let’s describe a highly simplified version of his method, where the hypothesis is that there are exactly two kinds of intelligence: quantitative and verbal. Spearman’s method consisted of making his subjects take several different kinds of tests. Let’s name these tests Classics, Math, Music, etc. The subjects scores can be represented by a matrix M, which has one row per student, and one column per test.
 
+在将张量之前，让我们先看矩阵分解如何可以用于学习隐藏变量的例子。
+在1940年，心理学家Charles Spearman尝试理解人类的智力是否可以分解为多种衡量智力方式的类型。我们来看对Charles Spearman方法的一个高度简化的版本——假设人类的智力由两个部分组成，量化和语言。
+Charles Spearman通过进行各种不同的考试来支持他的理论。考试科目包括：文学，数学，音乐等等。这些课程的分数用矩阵M来表示，其中，每一行代表一个学生，每一列代表一种科目。
+
+The simplified version of Spearman’s hypothesis is that each student has different amounts of quantitative and verbal intelligence, say xquant and xverb respectively. Each test measures a different mix of intelligences, so say it gives a weighting yquant to quantitative and yverb to verbal. Intuitively, a student with higher strength on verbal intelligence should perform better on a test that has a high weight on verbal intelligence. Let’s describe this relationship as a simple bilinear function:
 
 
 
