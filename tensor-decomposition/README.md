@@ -41,7 +41,7 @@ The simplified version of Spearman’s hypothesis is that each student has diffe
 简化一下Charles Spearman的假说，每一个学生具有不同的量化水平和语言水平，各自用<img src="http://latex.codecogs.com/gif.latex?x_{quant}" />和<img src="http://latex.codecogs.com/gif.latex?x_{verb}" /> 符号代表。
 每一个科目的测试衡量了不同程度智力水平的组合，（例如数学科目当中衡量量化水平的程度要更高一些），所以给量化水平和语言水平不同的权重，分别用<img src="http://latex.codecogs.com/gif.latex?y_{quant}" />和<img src="http://latex.codecogs.com/gif.latex?y_{verb}" /> 代表。
 直观得说，一个学生如果拥有较高的语言水平（相对于量化水平），那么他/她应该可以在语言水平权重比较高的科目中获得更优异的成绩。（例如语言水平更高的同学的语文成绩应该要比数学成绩更高一些）。
-那么我们用一个简单的二元线性函数来描述这个现象：
+那么我们用一个简单的二维线性函数来描述这个现象：
 
 <div align=center>
 <img src="http://latex.codecogs.com/gif.latex?score=x_{quant}%20\times%20y_{quant}+x_{verb}%20\times%20y_{verb}" />
@@ -49,7 +49,7 @@ The simplified version of Spearman’s hypothesis is that each student has diffe
 
 Denoting by x verb,x quant the vectors describing the strengths of the students, and letting y verb,y quant be the vectors that describe the weighting of intelligences in the different tests, we can express matrix M as the sum of two rank 1 matrices (in other words, M has rank at most 2):
 
-用<img src="http://latex.codecogs.com/gif.latex?\overrightarrow{x}_{quant}" />和<img src="http://latex.codecogs.com/gif.latex?\overrightarrow{x}_{verb}" /> 向量表示学生样本的两个智力水平，用<img src="http://latex.codecogs.com/gif.latex?\overrightarrow{y}_{quant}" />和<img src="http://latex.codecogs.com/gif.latex?\overrightarrow{y}_{verb}" />表示在不同考试当中两个智力类型的权重，我们可以用两个秩为1的矩阵和表示M，（而M的秩最大为2）：
+用<img src="http://latex.codecogs.com/gif.latex?\overrightarrow{x}_{quant}" />和<img src="http://latex.codecogs.com/gif.latex?\overrightarrow{x}_{verb}" /> 向量表示学生样本的两种智力水平，用<img src="http://latex.codecogs.com/gif.latex?\overrightarrow{y}_{quant}" />和<img src="http://latex.codecogs.com/gif.latex?\overrightarrow{y}_{verb}" />表示在不同考试当中两个智力类型的权重，我们可以用两个秩为1的矩阵和表示M，（而M的秩最大为2）：
 
 <div align=center>
 <img src="http://latex.codecogs.com/gif.latex?\textbf{M}=\overrightarrow{x}_{quant}%20\overrightarrow{y}^T_{quant}+\overrightarrow{x}_{verb}%20\overrightarrow{y}^T_{verb}" />
@@ -93,6 +93,52 @@ Since our current data has multiple explanatory decompositions, we need more dat
 现在让学生进行两次考试，一次是在白天，一次在晚上。得到的结果将会用两个矩阵表示，<img src="http://latex.codecogs.com/gif.latex?\textbf{M}_{day}">和<img src="http://latex.codecogs.com/gif.latex?\textbf{M}_{night}">。
 但是我们可以认为这是一个三维矩阵——张量<img src="http://latex.codecogs.com/gif.latex?\textbf{T}%20\in%20\textbf{R}^{\sharp%20students%20\times%20\sharp%20tests%20\times2">。
 这里第三个维度表示白天和黑夜。换句话说，矩阵<img src="http://latex.codecogs.com/gif.latex?\textbf{M}_{day}">和<img src="http://latex.codecogs.com/gif.latex?\textbf{M}_{night}">是张量<img src="http://latex.codecogs.com/gif.latex?\textbf{T}">在第三个维度方向上的切片。
+
+Let zquant and zverb be the relative strength of the two kinds of intelligence at a particular time (day or night), then the new score can be computed by a trilinear function:
+
+用<img src="http://latex.codecogs.com/gif.latex?\overrightarrow{z}_{quant}" />和<img src="http://latex.codecogs.com/gif.latex?\overrightarrow{z}_{verb}" /> 表示在特定时间（白天或者晚上）衡量两种智力水平，新的分数可以用三维线性函数表示：
+
+<div align=center>
+<img src="http://latex.codecogs.com/gif.latex?score=x_{quant}%20\times%20y_{quant}%20\times%20z_{quant}+x_{verb}%20\times%20y_{verb}%20\times%20z_{verb}" />
+</div>
+
+Keep in mind that this is the formula for one entry in the tensor: the score of one student, in one test and at a specific time. Who the student is specifies xquant and xverb; what the test is specifies weights yquant and yverb; when the test takes place specifies zquant and zverb.
+
+牢记这个公式是用来计算张量中的一个元素的：在某一个时间下的，某一个学生的某一项考试成绩。
+每个学生都有对应的智力水平<img src="http://latex.codecogs.com/gif.latex?\x_{quant}" />和<img src="http://latex.codecogs.com/gif.latex?x_{verb}" /> ，每个考试科目都有对应的智力类型权重<img src="http://latex.codecogs.com/gif.latex?\y_{quant}" />和<img src="http://latex.codecogs.com/gif.latex?y_{verb}" />，考试科目的时间也有对应的智力类型权重<img src="http://latex.codecogs.com/gif.latex?\z_{quant}" />和<img src="http://latex.codecogs.com/gif.latex?z_{verb}" />。
+
+Similar to matrices, we can view this as a rank 2 decomposition of the tensor T. In particular, if we use x⃗ quant,x⃗ verb to denote the strengths of students, y⃗ quant,y⃗ verb to denote the weights of the tests and z⃗ quant,z⃗ verb to denote the variations of strengths in time, then we can write the decomposition as
+
+类似于前面的矩阵，我们可以把这个看做是秩为2的张量<img src="http://latex.codecogs.com/gif.latex?\textbf{T}">的分解。
+特别的，如果我们用<img src="http://latex.codecogs.com/gif.latex?\overrightarrow{x}_{quant}" />和<img src="http://latex.codecogs.com/gif.latex?\overrightarrow{x}_{verb}" /> 向量表示学生样本的两种智力水平，<img src="http://latex.codecogs.com/gif.latex?\overrightarrow{y}_{quant}" />和<img src="http://latex.codecogs.com/gif.latex?\overrightarrow{y}_{verb}" />表示在不同考试当中两个智力类型的权重，<img src="http://latex.codecogs.com/gif.latex?\overrightarrow{z}_{quant}" />和<img src="http://latex.codecogs.com/gif.latex?\overrightarrow{z}_{verb}" />表示在不同的时间下两个智力类型的权重，那么就可以把分解记作：
+
+<div align=center>
+<img src="http://latex.codecogs.com/gif.latex?\textbf{T}=\overrightarrow{x}_{quant}%20\otimes%20\overrightarrow{y}_{quant}%20\otimes%20\overrightarrow{z}_{quant}+\overrightarrow{x}_{verb}%20\otimes%20\overrightarrow{y}_{verb}%20\otimes%20\overrightarrow{z}_{verb}" />
+</div>
+
+Now we can check that the second matrix decomposition we had is no longer valid: there are no values of zquant and zverb at night that could generate the matrix Mnight. This is not a coincidence. Kruskal 1977 gave sufficient conditions for such decompositions to be unique. When applied to our case it is very simple:
+
+现在我们可以检验在第2节当中的分解方式不再成立，因为无法解出晚上的<img src="http://latex.codecogs.com/gif.latex?\z_{quant}" />和<img src="http://latex.codecogs.com/gif.latex?z_{verb}" />，从而无法生成矩阵<img src="http://latex.codecogs.com/gif.latex?\textbf{M}_{night}">。这绝非偶然。[Kruskal 1977](http://www.sciencedirect.com/science/article/pii/0024379577900696)给出了矩阵可以被唯一分解的充分条件，而应用到本文中的案例非常简单：
+
+Corollary The decomposition of tensor T is unique (up to scaling and permutation) if none of the vector pairs (x⃗ quant,x⃗ verb), (y⃗ quant,y⃗ verb), (z⃗ quant,z⃗ verb) are co-linear.
+
+>  推论：当没有一个向量对<img src="http://latex.codecogs.com/gif.latex?(\overrightarrow{x}_{quant},\overrightarrow{x}_{verb})"/>，<img src="http://latex.codecogs.com/gif.latex?(\overrightarrow{y}_{quant},\overrightarrow{y}_{verb})"/>以及<img src="http://latex.codecogs.com/gif.latex?(\overrightarrow{z}_{quant},\overrightarrow{z}_{verb})"/>是线性相关的，那么张量<img src="http://latex.codecogs.com/gif.latex?\textbf{T}">的分解就是唯一的。
+
+Note that of course the decomposition is not truly unique for two reasons. First, the two tensor factors are symmetric, and we need to decide which factor correspond to quantitative intelligence. Second, we can scale the three components x⃗ quant ,y⃗ quant, z⃗ quant simultaneously, as long as the product of the three scales is 1. Intuitively this is like using different units to measure the three components. Kruskal’s result showed that these are the only degrees of freedom in the decomposition, and there cannot be a truly distinct decomposition as in the matrix case.
+
+分解不唯一的原因主要有两点：其一，张量的两个成分是对称的，我们需要决定哪个成分对应于量化水平；
+其二，我们可以同时缩放三个维度<img src="http://latex.codecogs.com/gif.latex?\overrightarrow{x}_{quant}" />，<img src="http://latex.codecogs.com/gif.latex?\overrightarrow{y}_{quant}" />和<img src="http://latex.codecogs.com/gif.latex?\overrightarrow{z}_{quant}" />，只要满足三个向量乘积的缩放比例保持1即可。
+直观上，这就像是用不同的计量单位去测量三个向量。
+Kruskal的结果表明，只有分解的阶数是自由量，并且在矩阵分解中不会有本质上的区别。
+
+## 4. 挖掘张量（Finding the Tensor）
+
+In the above example we get a low rank tensor T by gathering more data. In many traditional applications the extra data may be unavailable or hard to get. Luckily, many exciting recent developments show that we can uncover these special tensor structures even if the original data is not in a tensor form!
+
+
+
+
+
 
 
 
