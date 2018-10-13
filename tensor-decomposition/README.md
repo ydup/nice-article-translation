@@ -36,6 +36,10 @@ Before talking about tensors, let us first see an example of how matrix factoriz
 在1940年，心理学家Charles Spearman尝试理解人类的智力是否可以分解为多种可测量的智力种类。我们来介绍一个对Charles Spearman方法的一个高度简化的版本——假设人类的智力由两个部分组成，量化和语言。
 Charles Spearman通过进行各种不同类型的考试来组成他的科目，其中包括：文学，数学，音乐等等。这些课程的分数用矩阵M来表示，其中，每一行代表一个学生，每一列代表一种科目。
 
+<div align=center>
+<img src="img/1_1.png" />
+</div>
+
 The simplified version of Spearman’s hypothesis is that each student has different amounts of quantitative and verbal intelligence, say xquant and xverb respectively. Each test measures a different mix of intelligences, so say it gives a weighting yquant to quantitative and yverb to verbal. Intuitively, a student with higher strength on verbal intelligence should perform better on a test that has a high weight on verbal intelligence. Let’s describe this relationship as a simple bilinear function:
 
 Charles Spearman的假设的简化版：每一个学生具有不同的量化智力水平和语言智力水平，各自用<img src="http://latex.codecogs.com/gif.latex?x_{quant}" />和<img src="http://latex.codecogs.com/gif.latex?x_{verb}" /> 符号代表。
@@ -59,6 +63,10 @@ Thus verifying that M has rank 2 (or that it is very close to a rank 2 matrix) s
 
 因此，确认的矩阵<img src="http://latex.codecogs.com/gif.latex?\textbf{M}">的秩为2（或者说是很接近秩为2的矩阵，这里指的是矩阵在科目方向上的秩很接近2）可以让我们推断出确实只有这两种智力水平。
 
+<div align=center>
+<img src="img/1_2.png" />
+</div>
+
 
 Note that this decomposition is not the Singular Value Decomposition (SVD). SVD requires strong orthogonality constraints (which translates to “different intelligences are completely uncorrelated”) that are not plausible in this setting.
 
@@ -75,6 +83,10 @@ But ideally one would like to take the above idea further: we would like to assi
 However, this is incorrect, because the decomposition is not unique! The following is another valid decomposition.
 
 然而，这是不正确的，因为分解并不是唯一确定的，下面是另一种同样成立的分解方式：
+
+<div align=center>
+<img src="img/2_1.png" />
+</div>
 
 According to this decomposition, Bob is strongest in quantitative intelligence, not Alice. Both decompositions explain the data perfectly and we cannot decide a priori which is correct.
 
@@ -93,6 +105,10 @@ Since our current data has multiple explanatory decompositions, we need more dat
 现在让学生进行两次考试，一次是在白天，一次在晚上。得到的结果将会用两个矩阵表示，<img src="http://latex.codecogs.com/gif.latex?\textbf{M}_{day}">和<img src="http://latex.codecogs.com/gif.latex?\textbf{M}_{night}">。
 但是我们可以认为这是一个三维矩阵——张量<img src="http://latex.codecogs.com/gif.latex?\textbf{T}%20\in%20\textbf{R}^{\sharp%20students%20\times%20\sharp%20tests%20\times2">。
 这里第三个维度表示白天和黑夜。换句话说，矩阵<img src="http://latex.codecogs.com/gif.latex?\textbf{M}_{day}">和<img src="http://latex.codecogs.com/gif.latex?\textbf{M}_{night}">是张量<img src="http://latex.codecogs.com/gif.latex?\textbf{T}">在第三个维度方向上的切片。
+
+<div align=center>
+<img src="img/3_1.png" />
+</div>
 
 Let zquant and zverb be the relative strength of the two kinds of intelligence at a particular time (day or night), then the new score can be computed by a trilinear function:
 
@@ -116,6 +132,10 @@ Similar to matrices, we can view this as a rank 2 decomposition of the tensor T.
 
 <div align=center>
 <img src="http://latex.codecogs.com/gif.latex?\textbf{T}=\overrightarrow{x}_{quant}%20\otimes%20\overrightarrow{y}_{quant}%20\otimes%20\overrightarrow{z}_{quant}+\overrightarrow{x}_{verb}%20\otimes%20\overrightarrow{y}_{verb}%20\otimes%20\overrightarrow{z}_{verb}" />
+</div>
+
+<div align=center>
+<img src="img/3_2.png" />
 </div>
 
 Now we can check that the second matrix decomposition we had is no longer valid: there are no values of zquant and zverb at night that could generate the matrix Mnight. This is not a coincidence. Kruskal 1977 gave sufficient conditions for such decompositions to be unique. When applied to our case it is very simple:
@@ -155,6 +175,10 @@ In Hidden Markov Model, we observe a sequence of words (a sentence) that is gene
 下一个词的话题只取决于当前词的话题，每个话题都对应了一些词汇的分布。
 除了话题本身，我们观测到的随机的词汇 <img src="http://latex.codecogs.com/gif.latex?x">是从话题的分布中提取出的
 （例如，如果话题是关于运动，那么我们就很可能会看到类似于”得分“这样的单词）。这种依赖性通常用下图阐释：
+
+<div align=center>
+<img src="img/4_1.png" />
+</div>
 
 More concretely, to generate a sentence in Hidden Markov Model, we start with some initial topic h1. This topic will evolve as a Markov Chain to generate the topics for future words h2,h3,…,ht. We observe words x1,…,xt from these topics. In particular, word x1 is drawn according to topic h1, word x2 is drawn according to topic h2 and so on.
 
