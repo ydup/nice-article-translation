@@ -17,7 +17,9 @@ In this post I will briefly describe why tensors are useful in these settings.
 
 Using Singular Value Decomposition (SVD), we can write a matrix M∈Rn×m as the sum of many rank one matrices:
 
-通过奇异值分解方法（SVD），我们可以把一个矩阵 \\ M \in  R_{n \times m} \\  写作很多个秩为1的矩阵和的形式：
+通过奇异值分解方法（SVD），我们可以把一个矩阵 <img src="http://latex.codecogs.com/gif.latex?M\inR_{n\timesm}" />  写作很多个秩为1的矩阵和的形式：
+
+<img src="http://latex.codecogs.com/gif.latex?M\inR_{n\timesm}" />
 
 <img src="http://latex.codecogs.com/gif.latex?M=\sum_{i=1}^{r}{\lambda_i\overrightarrow{u_i}\overrightarrow{v_i}^{T}}" />
  ![img](http://latex.codecogs.com/gif.latex?M=\sum_{i=1}^{r}{\lambda_i\overrightarrow{u_i}\overrightarrow{v_i}^{T}})
