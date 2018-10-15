@@ -5,7 +5,7 @@ This original blog is from https://www.offconvex.org/2015/12/17/tensor-decomposi
 本文翻自https://www.offconvex.org/2015/12/17/tensor-decompositions/。
 
 翻译： 张亚东
-<dir alig=center>
+<dir align=center>
 <img scr="img/mindplot.png" />
 </dir>
 
