@@ -5,6 +5,9 @@ This original blog is from https://www.offconvex.org/2015/12/17/tensor-decomposi
 本文翻自https://www.offconvex.org/2015/12/17/tensor-decompositions/。
 
 翻译： 张亚东
+<dir alig=center>
+<img scr="img/mindplot.png" />
+</dir>
 
 Tensors are high dimensional generalizations of matrices.
 In recent years tensor decompositions were used to design learning algorithms for estimating parameters of latent variable models like Hidden Markov Model, Mixture of Gaussians and Latent Dirichlet Allocation (many of these works were considered as examples of “spectral learning”, read on to find out why). 
@@ -280,7 +283,7 @@ where Du⃗ ,Dv⃗  are diagonal matrices. This is called a simultaneous diagona
 Many of the earlier works (including Mossel and Roch 2006) that apply tensor decompositions to learning problems have actually independently rediscovered this algorithm, and the word “tensor” never appeared in the papers. In fact, tensor decomposition techniques are traditionally called “spectral learning” since they are seen as derived from SVD. But now we have other methods to do tensor decompositions that have better theoretical guarantees and practical performances. See the survey by Kolda and Bader 2009 for more discussions.
 
 很多早先的应用张量分解到学习问题中的工作（包括[Mossel and Roch 2006](https://projecteuclid.org/euclid.aoap/1151592244)）已经发现了这个算法，而名词"tensor"却从未出现在该篇论文中。
-事实上，张量分解技术传统上被称为谱学习，因为他们是被从SVD方法中提取出来的。
+事实上，张量分解技术传统上被称为谱学习，因为他们是从SVD方法中提取出来的。
 但是现在我们有了其他方法可以实现张量分解，并且这些方法有着更好的理论依据和实践中的表现。关于这方面，可以从[Kolda and Bader 2009](http://dl.acm.org/citation.cfm?id=1655230)的概述中看到更多的讨论。
 
 
