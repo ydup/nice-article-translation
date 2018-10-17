@@ -1,4 +1,4 @@
-# 神经网络：什么是视觉幻想？我不懂(Neural networks don't understand what optical illusions are)
+# 神经网络：什么是视觉幻象？我不懂(Neural networks don't understand what optical illusions are)
 
 This original blog is from https://www.technologyreview.com/s/612261/neural-networks-dont-understand-what-optical-illusions-are/amp/.
 
