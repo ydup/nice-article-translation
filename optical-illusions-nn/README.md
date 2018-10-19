@@ -1,5 +1,9 @@
 # 神经网络：什么是视觉幻象？我不懂(Neural networks don't understand what optical illusions are)
 
+<div align=center>
+<img src="img/arxivopticvalillustion.jpg" />
+</div>
+
 This original blog is from https://www.technologyreview.com/s/612261/neural-networks-dont-understand-what-optical-illusions-are/amp/.
 
 本文翻自https://www.technologyreview.com/s/612261/neural-networks-dont-understand-what-optical-illusions-are/amp/。
@@ -39,8 +43,33 @@ First some background. The recent advances in deep learning are based on two adv
 
 The second is the creation of huge annotated databases that machines can learn from. Teaching a machine to recognize faces, for example, requires many tens of thousands of images containing faces that are clearly labeled. With that information, a neural net can learn to spot characteristic facial patterns—two eyes, a nose, and a mouth, for example. And even more impressive, a pair of them—called a generative adversarial network—can teach each other to create realistic, but totally synthetic, images of faces.
 
+第二点是大量可供机器学习的庞大的数据库。例如，训练机器进行面部识别需要数以万计的包含明确标签的面部图片。
+有了标签，神经网络可以学习标记面部的特征部位——一双眼睛，一个鼻子和一个嘴巴。
+并且更厉害的是，一对神经网络（被称为生成对抗网络）可以互相训练对方生成真实但是人造的面部图像。
 
+Williams and Yampolskiy set out to teach a neural network to identify optical illusions in the same way. The computing horsepower is easily available, but the necessary databases are not. So the researchers’ first task was to create a database of optical illusions for training.
 
+同样的，Williams和Yampolskiy着手训练神经网络识别光学错觉。
+计算资源很容易获得，但是必要的数据库却不同了。
+所以研究者们的第一个任务就是建造用于训练的光学错觉数据库。
 
+That turns out to be hard. “The number of static optical illusion images is in the low thousands, and the number of unique kinds of illusions is certainly very low, perhaps only a few dozen,” they say.
 
+但他们发现这是很难的：“光学错觉的图像只有区区几千，并且真正独一无二的图像更加的少，大概只有几十个。
+
+That represents a challenge for current machine-learning systems. “Creating a model capable of learning from such a small and limited dataset would represent a huge leap in generative models and understanding of human vision,” they say.
+
+So Williams and Yampolskiy compiled a database of over 6,000 images of optical illusions and then trained a neural network to recognize them. Then they built a generative adversarial network to create optical illusions for itself.
+
+The results were disappointing. “Nothing of value was created after 7 hours of training on an Nvidia Tesla K80,” say the researchers, who have made their database available for others to use.
+
+Nevertheless, this is an interesting result. “The only optical illusions known to humans have been created by evolution (for instance, eye patterns in butterfly wings) or by human artists,” they point out.
+
+In both cases, humans play a crucial role by providing valuable feedback—humans can see the illusion.
+
+But machine-vision systems cannot. “It seems unlikely that [a generative adversarial network] could learn to trick human vision without being able to understand the principles behind these illusions,” say Williams and Yampolskiy.
+
+They may not be easy, because there are crucial differences between machine-vision systems and the human visual system. Various researchers are developing neural networks that resemble the human visual system ever more closely. Perhaps an interesting test will be whether they can see illusions or not.
+
+In the meantime, Williams and Yampolskiy are not optimistic. “It seems that a dataset of illusion images might not be sufficient to create new illusions,” they say. So for the moment, optical illusions are a bastion of human experience that machines cannot conquer.
 
