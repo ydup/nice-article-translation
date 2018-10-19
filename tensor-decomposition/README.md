@@ -6,9 +6,10 @@ This original blog is from https://www.offconvex.org/2015/12/17/tensor-decomposi
 
 翻译： 张亚东
 
-<dir align=center>
-<img scr="img/mindplot.jpeg" />
-</dir>
+
+[TOC] 
+
+![img](img/mindplot.jpeg)
 
 Tensors are high dimensional generalizations of matrices.
 In recent years tensor decompositions were used to design learning algorithms for estimating parameters of latent variable models like Hidden Markov Model, Mixture of Gaussians and Latent Dirichlet Allocation (many of these works were considered as examples of “spectral learning”, read on to find out why). 
@@ -32,7 +33,7 @@ Tensor decomposition is a generalization of low rank matrix decomposition. Altho
 
 张量分解是低秩矩阵分解的推广。尽管大多数张量问题在最坏的情况下都是NP难问题，但是很多张量分解的子问题可以在多项式级别复杂度的时间内解决。后面我们会看到，这些子问题在学习潜在变量模型中仍旧十分强大。
 
-## 1. 矩阵分解 (Matrix Decompositions)
+## 1. 矩阵分解 （Matrix Decompositions）
 
 Before talking about tensors, let us first see an example of how matrix factorization can be used to learn latent variable models. In 1904, psychologist Charles Spearman tried to understand whether human intelligence is a composite of different types of measureable intelligence. Let’s describe a highly simplified version of his method, where the hypothesis is that there are exactly two kinds of intelligence: quantitative and verbal. Spearman’s method consisted of making his subjects take several different kinds of tests. Let’s name these tests Classics, Math, Music, etc. The subjects scores can be represented by a matrix M, which has one row per student, and one column per test.
 
@@ -71,13 +72,12 @@ Thus verifying that M has rank 2 (or that it is very close to a rank 2 matrix) s
 <img src="img/1_2.png" />
 </div>
 
-
 Note that this decomposition is not the Singular Value Decomposition (SVD). SVD requires strong orthogonality constraints (which translates to “different intelligences are completely uncorrelated”) that are not plausible in this setting.
 
 需要说明的是，这里的分解并不是奇异值分解（SVD），SVD具有很强的正交性约束条件，换句话说就是不同的智力类型是完全不相关的，而在这个问题中正交约束并不合理。
 
 
-## 2. 分解的不确定性 (The Ambiguity)
+## 2. 分解的不确定性 （The Ambiguity）
 
 But ideally one would like to take the above idea further: we would like to assign a definitive quantitative/verbal intelligence score to each student. This seems simple at first sight: just read off the score from the decomposition. For instance, it shows Alice is strongest in quantitative intelligence.
 
