@@ -7,11 +7,11 @@ This original blog is from https://www.offconvex.org/2015/12/17/tensor-decomposi
 翻译： 张亚东
 
 
-- [矩阵分解 （Matrix Decompositions）](#1-matrix-decompositions)
-- [分解的不确定性 （The Ambiguity）](#2-the-ambiguity)
-- [增加第三个维度（Adding the 3rd Dimension）](#3-adding-the-3rd-dimension)
-- [挖掘张量（Finding the Tensor）](#4-finding-the-tensor)
-- [张量分解的实现（Implementing Tensor Decomposition）](#5-implementing-tensor-decomposition)
+- [矩阵分解 （Matrix Decompositions）](#1-矩阵分解-matrix-decompositions)
+- [分解的不确定性 （The Ambiguity）](#2-分解的不确定性-the-ambiguity)
+- [增加第三个维度（Adding the 3rd Dimension）](#3-增加第三个维度adding-the-3rd-dimension)
+- [挖掘张量（Finding the Tensor）](#4-挖掘张量finding-the-tensor)
+- [张量分解的实现（Implementing Tensor Decomposition）](#5-张量分解的实现implementing-tensor-decomposition)
 
 ![img](img/mindplot.jpeg)
 
