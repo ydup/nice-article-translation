@@ -291,7 +291,9 @@ Many of the earlier works (including Mossel and Roch 2006) that apply tensor dec
 事实上，张量分解技术传统上被称为谱学习，因为他们是从SVD方法中提取出来的。
 但是现在我们有了其他方法可以实现张量分解，并且这些方法有着更好的理论依据和实践中的表现。关于这方面，可以从[Kolda and Bader 2009](http://dl.acm.org/citation.cfm?id=1655230)的概述中看到更多的讨论。
 
+- - - 
 
+欢迎关注秦人科技，http://qinren.tech/
 
 
 
