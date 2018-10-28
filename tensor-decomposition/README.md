@@ -6,6 +6,7 @@ This original blog is from https://www.offconvex.org/2015/12/17/tensor-decomposi
 
 翻译： 张亚东
 
+校对：陈思宇，隋宇轩，邹晨晔。
 
 - [矩阵分解 （Matrix Decompositions）](#1-矩阵分解-matrix-decompositions)
 - [分解的不确定性 （The Ambiguity）](#2-分解的不确定性-the-ambiguity)
@@ -35,15 +36,15 @@ When the rank r is small, this gives a concise representation for the matrix M (
 
 Tensor decomposition is a generalization of low rank matrix decomposition. Although most tensor problems are NP-hard in the worst case, several natural subcases of tensor decomposition can be solved in polynomial time. Later we will see that these subcases are still very powerful in learning latent variable models.
 
-张量分解是低秩矩阵分解的推广。尽管大多数张量问题在最坏的情况下都是NP难问题，但是很多张量分解的子问题可以在多项式级别复杂度的时间内解决。后面我们会看到，这些子问题在学习潜在变量模型中仍旧十分强大。
+张量分解是低秩矩阵分解的推广。尽管大多数张量问题在最坏的情况下都是NP难问题，但是很多张量分解的子问题可以在多项式级别复杂度的时间内解决。后面我们会看到，这些自然子问题在学习潜在变量模型中仍旧十分强大。
 
 ## 1. 矩阵分解 （Matrix Decompositions）
 
 Before talking about tensors, let us first see an example of how matrix factorization can be used to learn latent variable models. In 1904, psychologist Charles Spearman tried to understand whether human intelligence is a composite of different types of measureable intelligence. Let’s describe a highly simplified version of his method, where the hypothesis is that there are exactly two kinds of intelligence: quantitative and verbal. Spearman’s method consisted of making his subjects take several different kinds of tests. Let’s name these tests Classics, Math, Music, etc. The subjects scores can be represented by a matrix M, which has one row per student, and one column per test.
 
-在讲张量之前，让我们先看一个例子关于如何将矩阵分解应用于学习隐藏变量。
-在1940年，心理学家Charles Spearman尝试理解人类的智力是否可以分解为多种可测量的智力种类。我们来介绍一个对Charles Spearman方法的一个高度简化的版本——假设人类的智力由两个部分组成，量化和语言。
-Charles Spearman通过进行各种不同类型的考试来组成他的科目，其中包括：文学，数学，音乐等等。这些课程的分数用矩阵M来表示，其中，每一行代表一个学生，每一列代表一种科目。
+在讲张量之前，让我们先看一个如何将矩阵分解应用于学习隐藏变量的例子。
+在1904年，心理学家Charles Spearman尝试理解人类的智力是否可以分解为多种可测量的智力种类。我们来介绍一个对Charles Spearman方法的一个高度简化的版本——假设人类的智力由两个部分组成，量化和语言。
+Charles Spearman通过进行各种不同类型的考试来组成他的测试，其中包括：文学，数学，音乐等等。这些课程的分数用矩阵M来表示，其中，每一行代表一个学生，每一列代表一种科目。
 
 <div align=center>
 <img src="img/1_1.png" />
@@ -102,14 +103,14 @@ According to this decomposition, Bob is strongest in quantitative intelligence, 
 
 Sometimes we can hope to find the unique solution by imposing additional constraints on the decomposition, such as all matrix entries have to be nonnegative. However even after imposing many natural constraints, in general the issue of multiple decompositions will remain.
 
-通常，我们希望通过在分解过程中附加约束找到唯一的解，例如所有矩阵元素必须是非负的。然而，尽管利用了许多正常的约束，通常多解的问题依旧存在。
+通常，我们希望通过在分解过程中附加约束找到唯一的解，例如所有矩阵元素必须是非负的。然而，尽管施加许多自然的约束之后，通常多解的问题依旧存在。
 
 ## 3. 增加第三个维度（Adding the 3rd Dimension）
 
 Since our current data has multiple explanatory decompositions, we need more data to learn exactly which explanation is the truth. Assume the strength of the intelligence changes with time: we get better at quantitative tasks at night. Now we can let the (poor) students take the tests twice: once during the day and once at night. The results we get can be represented by two matrices Mday and Mnight. But we can also think of this as a three dimensional array of numbers -– a tensor T in R♯students×♯tests×2. Here the third axis stands for “day” or “night”. We say the two matrices Mday and Mnight are slices of the tensor T.
 
-在第二节我们讲到了，因为目前的数据有多种分解方式，所以我们需要更多的数据去挖掘到底怎样的分解才是正确的。
-假设智力水平会随着一天内的时间发生改变，例如，我们在晚上的时候可以更好的完成量化类型的工作（只是一个假设）。
+在第二节我们讲到了，因为目前的数据多种与数据相吻合的分解方式，所以我们需要更多的数据去挖掘到底怎样的分解才是正确的。
+假设智力水平会随着一天内的时间推移发生改变，例如，我们在晚上的时候可以更好的完成量化类型的工作（只是一个假设）。
 现在让学生进行两次考试，一次是在白天，一次在晚上。得到的结果将会用两个矩阵表示，<img src="http://latex.codecogs.com/gif.latex?\textbf{M}_{day}">和<img src="http://latex.codecogs.com/gif.latex?\textbf{M}_{night}">。
 但是我们可以认为这是一个三维矩阵——张量<img src="http://latex.codecogs.com/gif.latex?\textbf{T}%20\in%20\textbf{R}^{\sharp%20students%20\times%20\sharp%20tests%20\times2">。
 这里第三个维度表示白天和黑夜。换句话说，矩阵<img src="http://latex.codecogs.com/gif.latex?\textbf{M}_{day}">和<img src="http://latex.codecogs.com/gif.latex?\textbf{M}_{night}">是张量<img src="http://latex.codecogs.com/gif.latex?\textbf{T}">在第三个维度方向上的切片。
@@ -120,7 +121,7 @@ Since our current data has multiple explanatory decompositions, we need more dat
 
 Let zquant and zverb be the relative strength of the two kinds of intelligence at a particular time (day or night), then the new score can be computed by a trilinear function:
 
-用<img src="http://latex.codecogs.com/gif.latex?\overrightarrow{z}_{quant}" />和<img src="http://latex.codecogs.com/gif.latex?\overrightarrow{z}_{verb}" /> 表示在特定时间（白天或者晚上）衡量两种智力水平，新的分数可以用三维线性函数表示：
+用<img src="http://latex.codecogs.com/gif.latex?\overrightarrow{z}_{quant}" />和<img src="http://latex.codecogs.com/gif.latex?\overrightarrow{z}_{verb}" /> 表示在特定时间（白天或者晚上）衡量两种智力相对水平，新的分数可以用三维线性函数表示：
 
 <div align=center>
 <img src="http://latex.codecogs.com/gif.latex?score=x_{quant}%20\times%20y_{quant}%20\times%20z_{quant}+x_{verb}%20\times%20y_{verb}%20\times%20z_{verb}" />
@@ -156,7 +157,7 @@ Corollary The decomposition of tensor T is unique (up to scaling and permutation
 
 Note that of course the decomposition is not truly unique for two reasons. First, the two tensor factors are symmetric, and we need to decide which factor correspond to quantitative intelligence. Second, we can scale the three components x⃗ quant ,y⃗ quant, z⃗ quant simultaneously, as long as the product of the three scales is 1. Intuitively this is like using different units to measure the three components. Kruskal’s result showed that these are the only degrees of freedom in the decomposition, and there cannot be a truly distinct decomposition as in the matrix case.
 
-分解不唯一的原因主要有两点：其一，张量的两个成分是对称的，并且我们需要决定哪个成分对应于量化智力水平；
+需要注意的是，此时分解仍旧是不唯一，其原因主要有两点：其一，张量的两个成分是对称的，并且我们需要决定哪个成分对应于量化智力水平；
 其二，我们可以同时缩放三个维度<img src="http://latex.codecogs.com/gif.latex?\overrightarrow{x}_{quant}" />，<img src="http://latex.codecogs.com/gif.latex?\overrightarrow{y}_{quant}" />和<img src="http://latex.codecogs.com/gif.latex?\overrightarrow{z}_{quant}" />，只要满足三个向量乘积的缩放比例保持1即可。
 直观上，这就像是用不同的计量单位去测量三个向量。
 Kruskal的结果表明，只有分解的阶数是自由量，并且在矩阵分解中不会有本质上的区别。
@@ -211,7 +212,7 @@ Given many sentences that are generated exactly according to this model, how can
 Why does this tensor have the nice low rank property? The key observation is that if we “fix” (condition on) the topic of the second word h2, it cuts the graph into three parts: one part containing h1,x1, one part containing x2 and one part containing h3,x3. These three parts are independent conditioned on h2. In particular, the first three words x1,x2,x3 are independent conditioned on the topic of the second word h2. Using this observation we can compute each entry of the tensor as
 
 那么为什么这个张量具有很好的低秩性呢？
-关键的观察在于如果我们固定第二个单词的话题<img src="http://latex.codecogs.com/gif.latex?h_2">，那么就会将拓扑分解为三个部分：
+关键点在于如果我们固定第二个单词的话题<img src="http://latex.codecogs.com/gif.latex?h_2">，那么就会将拓扑分解为三个部分：
 一个部分包括了<img src="http://latex.codecogs.com/gif.latex?h_1,x_1">，一个包括了<img src="http://latex.codecogs.com/gif.latex?x_2">以及第三个包括了<img src="http://latex.codecogs.com/gif.latex?h_3,x_3">。
 这三个部分在固定<img src="http://latex.codecogs.com/gif.latex?h_2">的情况下都是互相独立的。
 特别的，三个词<img src="http://latex.codecogs.com/gif.latex?x_1,x_2,x_3">在固定<img src="http://latex.codecogs.com/gif.latex?h_2">的情况下是独立的。根据这样的观察，我们可以计算张量中的每一个元素：
@@ -248,7 +249,7 @@ Using method of moments, we can discover nice tensor structures from many proble
 In the worst case we have bad news: most tensor problems are NP-hard. However, in most natural cases, as long as the tensor does not have too many components, and the components are not adversarially chosen, tensor decomposition can be computed in polynomial time! Here we describe the algorithm by Dr. Robert Jenrich (it first appeared in a 1970 working paper by Harshman, the version we present here is a more general version by Leurgans, Ross and Abel 1993).
 
 不幸的是，在最坏的情况下，大多数张量问题都是NP难问题。
-但是，在多数自然的情况下，只要张量没有太多的成分，并且成分不是敌对地选择，那么张量分解往往可以在多项式类型的时间复杂度内计算完毕。
+但是，在多数自然的情况下，只要张量没有太多的成分，并且成分不是对立地选择，那么张量分解往往可以在多项式类型的时间复杂度内计算完毕。
 这里我们介绍Dr. Robert Jenrich的算法（首次出现在1970年[Harshman的论文](http://hbanaszak.mjr.uw.edu.pl/TempTxt/Harshman_1970_Foundations%20of%20PARAFAC%20Procedure%20MOdels%20and%20Conditions%20for%20an%20Expalanatory%20Multimodal%20Factor%20Analysis.pdf)当中，这里我们介绍的是更普适的[Leurgans, Ross and Abel 1993](http://dl.acm.org/citation.cfm?id=173234)版本）。
 
 Jenrich的算法：
@@ -262,7 +263,7 @@ Jenrich的算法：
 
 In the algorithm, “+” denotes pseudo-inverse of a matrix (think of it as inverse if this is not familiar).
 
-在算法中，<img src="http://latex.codecogs.com/gif.latex?%20^{+}">指的是矩阵的假逆（如果你不熟悉的话，可以认为就是求逆矩阵的符号）。
+在算法中，<img src="http://latex.codecogs.com/gif.latex?%20^{+}">指的是矩阵的伪逆（如果你不熟悉的话，可以认为就是求逆矩阵的符号）。
 
 The algorithm looks at weighted slices of the tensor: a weighted slice is a matrix that is the projection of the tensor along the z direction (similarly if we take a slice of a matrix M, it will be a vector that is equal to Mu⃗ ). Because of the low rank structure, all the slices must share matrix decompositions with the same components.
 
@@ -282,7 +283,7 @@ where Du⃗ ,Dv⃗  are diagonal matrices. This is called a simultaneous diagona
 
 上式中，<img src="http://latex.codecogs.com/gif.latex?\textbf{D}_{\overrightarrow{u}},\textbf{D}_{\overrightarrow{v}}">均为对角矩阵。
 这称作对于<img src="http://latex.codecogs.com/gif.latex?\textbf{T}_{\overrightarrow{u}}">和<img src="http://latex.codecogs.com/gif.latex?\textbf{T}_{\overrightarrow{v}}">的同步对角化。
-在这样的结构中，很容易看出<img src="http://latex.codecogs.com/gif.latex?\overrightarrow{x}_i">就是<img src="http://latex.codecogs.com/gif.latex?\textbf{T}_{\overrightarrow{u}}(\textbf{T}_{\overrightarrow{v}})^{+}=\textbf{X}\textbf{D}_{\overrightarrow{u}}\textbf{D}_{\overrightarrow{v}}^{-1}%20\textbf{Y}^{+}">的特征向量。
+在这样的结构中，很容易看出<img src="http://latex.codecogs.com/gif.latex?\overrightarrow{x}_i">就是<img src="http://latex.codecogs.com/gif.latex?\textbf{T}_{\overrightarrow{u}}(\textbf{T}_{\overrightarrow{v}})^{+}=\textbf{X}\textbf{D}_{\overrightarrow{u}}\textbf{D}_{\overrightarrow{v}}^{-1}%20\textbf{X}^{+}">的特征向量。
 所以实际上我们可以通过矩阵的谱分解实现张量分解。
 
 Many of the earlier works (including Mossel and Roch 2006) that apply tensor decompositions to learning problems have actually independently rediscovered this algorithm, and the word “tensor” never appeared in the papers. In fact, tensor decomposition techniques are traditionally called “spectral learning” since they are seen as derived from SVD. But now we have other methods to do tensor decompositions that have better theoretical guarantees and practical performances. See the survey by Kolda and Bader 2009 for more discussions.
